@@ -1,35 +1,77 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MyApp</title>
+    <title>ELDEN掲示板</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+    <!-- 追加スタイル -->
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #0e0e0e, #1c1c1c);
+        color: #f5f5f5;
+      }
+
+      header {
+        background-color: #1a1a1a;
+        padding: 15px 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      }
+
+      nav a, nav form {
+        margin-right: 20px;
+        color: #f5f5f5;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      nav a:hover {
+        color: #facc15; /* 黄金色 */
+      }
+
+      .main {
+        padding: 40px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .flash {
+        background-color: #222;
+        border-left: 5px solid #facc15;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+    </style>
   </head>
 
   <body>
     <!-- ヘッダー -->
-    <header style="background-color: #eee; padding: 10px 20px;">
+    <header>
       <nav>
-        <%= link_to "トップ", root_path, style: "margin-right: 15px;" %>
-        <%= link_to "投稿一覧", posts_path, style: "margin-right: 15px;" %>
+        <%= link_to "トップ", root_path %>
+        <%= link_to "投稿一覧", posts_path %>
 
         <% if logged_in? %>
-          <%= link_to "新規投稿", new_post_path, style: "margin-right: 15px;" %>
-          <%= link_to "ログアウト", logout_path, method: :delete, data: { confirm: "ログアウトしますか？" } %>
+          <%= link_to "新規投稿", new_post_path %>
+          <%= button_to "ログアウト", logout_path, method: :delete, data: { confirm: "ログアウトしますか？" }, form: { style: "display:inline;" } %>
         <% else %>
-          <%= link_to "ユーザー登録", signup_path, style: "margin-right: 15px;" %>
+          <%= link_to "ユーザー登録", signup_path %>
           <%= link_to "ログイン", login_path %>
         <% end %>
       </nav>
     </header>
 
     <!-- 本文 -->
-    <div class="main" style="padding: 20px;">
+    <div class="main">
       <% flash.each do |type, msg| %>
-        <p style="color: green;"><%= msg %></p>
+        <div class="flash"><%= msg %></div>
       <% end %>
 
       <%= yield %>

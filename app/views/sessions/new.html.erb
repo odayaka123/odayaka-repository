@@ -1,48 +1,74 @@
-<!-- app/views/sessions/new.html.erb -->
-
 <style>
   body {
-    background-color: #d3d3d3;
-    font-family: sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #0d0d0d);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #f5f5f5;
   }
 
   .container {
     width: 100%;
-    max-width: 400px;
-    margin: 50px auto;
-    text-align: center;
+    max-width: 420px;
+    margin: 80px auto;
+    padding: 30px 25px;
+    background: #2a2a2a;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid #444;
   }
 
   .header {
-    background-color: #a0ded9;
-    padding: 15px;
-    font-size: 20px;
+    background: linear-gradient(90deg, #3b3054, #1a1a1a);
+    padding: 18px;
+    font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: #facc15;
+    border-radius: 10px;
+    text-align: center;
     margin-bottom: 30px;
+    text-shadow: 1px 1px 5px #000;
   }
 
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
   input[type="email"],
   input[type="password"] {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #1f1f1f;
+    color: #f5f5f5;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #facc15;
+    box-shadow: 0 0 6px rgba(250, 204, 21, 0.3);
+    outline: none;
   }
 
   .submit-button {
-    background-color: white;
-    border: 1px solid black;
-    padding: 10px 20px;
-    cursor: pointer;
+    width: 100%;
+    background-color: #facc15;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
     font-weight: bold;
+    color: #000;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .submit-button:hover {
+    background-color: #ffd633;
+    transform: translateY(-2px);
   }
 </style>
 
@@ -51,11 +77,11 @@
 
   <%= form_with url: sessions_path, scope: :session, local: true do |form| %>
     <div class="form-group">
-      <%= form.email_field :email, placeholder: "メールアドレス入力欄" %>
+      <%= form.email_field :email, placeholder: "メールアドレスを入力" %>
     </div>
 
     <div class="form-group">
-      <%= form.password_field :password, placeholder: "パスワード入力欄" %>
+      <%= form.password_field :password, placeholder: "パスワードを入力" %>
     </div>
 
     <div class="form-group">

@@ -1,49 +1,72 @@
 <style>
   body {
-    background-color: #d3d3d3;
-    font-family: sans-serif;
+    background: linear-gradient(to bottom, #0d0d0d, #1c1c1c);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #f5f5f5;
   }
 
   .header {
-    background-color: #a0ded9;
-    padding: 15px;
-    font-size: 22px;
+    background-color: #2e2b4f;
+    padding: 25px;
+    font-size: 32px;
     font-weight: bold;
-    color: #333;
+    color: #facc15; /* 黄金色 */
     text-align: center;
-    margin-bottom: 30px;
-    border-bottom: 3px solid #6699cc;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 5px #000;
+    margin-bottom: 40px;
   }
 
   .post-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
+    padding: 0 20px 60px;
   }
 
   .post-card {
-    background-color: white;
-    width: 200px;
+    background: #2a2a2a;
+    width: 260px;
     padding: 20px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    border-radius: 4px;
-    text-align: left;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #444;
+  }
+
+  .post-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(250, 204, 21, 0.3);
   }
 
   .post-title {
     font-weight: bold;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 20px;
+  }
+
+  .post-title a {
+    text-decoration: none;
+    color: #facc15;
+    transition: color 0.3s;
+  }
+
+  .post-title a:hover {
+    color: #fff;
   }
 
   .post-meta {
     font-size: 14px;
-    color: #333;
+    color: #bbb;
+    line-height: 1.5;
   }
 </style>
 
-<div class="header">投稿一覧ページ</div>
+<div class="header">投稿一覧</div>
 
 <div class="post-grid">
   <% @posts.each do |post| %>
@@ -52,8 +75,8 @@
         <%= link_to post.title, post_path(post) %>
       </div>
       <div class="post-meta">
-        タイトル名<br>
-        <%= post.user.name %>
+        投稿者: <%= post.user.name %><br>
+        投稿日: <%= post.created_at.strftime("%Y/%m/%d %H:%M") %>
       </div>
     </div>
   <% end %>

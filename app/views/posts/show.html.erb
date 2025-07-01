@@ -1,17 +1,66 @@
-<h1><%= @post.title %></h1>
-<p><%= @post.body %></p>
+<div style="max-width: 700px; margin: 0 auto; padding: 20px; font-family: 'Segoe UI', sans-serif; color: #f5f5f5; background: #1a1a1a; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.6);">
 
-<% if @post.image.attached? %>
-  <div>
-    <%= image_tag @post.image %>
+  <h1 style="font-size: 28px; margin-bottom: 10px; text-align: center; color: #facc15;"><%= @post.title %></h1>
+  <p style="font-size: 18px; margin-bottom: 20px; text-align: center;"><%= @post.body %></p>
+
+  <% if @post.image.attached? %>
+    <div style="margin-bottom: 20px; text-align: center;">
+      <%= image_tag @post.image, style: "max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);" %>
+    </div>
+  <% end %>
+
+  <p style="font-weight: bold; color: #ccc; text-align: center;">投稿者: <%= @post.user.name %></p>
+
+  <% if @post.user == current_user %>
+    <div style="margin: 10px 0; text-align: center;">
+      <%= link_to "編集", edit_post_path(@post), style: "margin-right: 10px; color: #007bff;" %>
+      <%= button_to "削除", @post, method: :delete, data: { confirm: "本当に削除しますか？" }, form: { style: "display:inline;" }, style: "color: red;" %>
+    </div>
+  <% end %>
+
+  <div style="text-align: center; margin-bottom: 30px;">
+    <%= link_to "← 投稿一覧へ戻る", posts_path, style: "display: inline-block; text-decoration: underline; color: #facc15;" %>
   </div>
-<% end %>
 
-<p>投稿者: <%= @post.user.name %></p>
+  <hr style="border: none; border-top: 1px solid #444; margin: 30px 0;">
 
-<% if @post.user == current_user %>
-  <%= link_to "編集", edit_post_path(@post) %> |
-  <%= link_to "削除", @post, method: :delete, data: { confirm: "本当に削除しますか？" } %>
-<% end %>
+  <h3 style="margin-top: 30px; color: #facc15;">コメント一覧</h3>
 
-<%= link_to "戻る", posts_path %>
+  <% if @post.comments.any? %>
+    <div style="margin-top: 15px;">
+      <% @post.comments.each do |comment| %>
+        <div style="border: 1px solid #444; border-radius: 8px; padding: 10px 15px; margin-bottom: 15px; background-color: #2a2a2a;">
+          <p style="margin-bottom: 5px; color: #f5f5f5;">
+            <strong style="color: #facc15;"><%= comment.user.name %></strong>：
+            <span><%= comment.body %></span>
+          </p>
+          <% if comment.user == current_user %>
+            <div style="font-size: 14px; margin-top: 5px;">
+              <%= link_to "編集", edit_post_comment_path(@post, comment), style: "margin-right: 10px; color: #007bff;" %>
+              <%= button_to "削除", post_comment_path(@post, comment), method: :delete, data: { confirm: "本当に削除しますか？" }, form: { style: "display:inline;" }, style: "color: red;" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p style="text-align: center; color: #bbb;">まだコメントはありません。</p>
+  <% end %>
+
+  <% if logged_in? %>
+    <h3 style="margin-top: 40px; color: #facc15;">コメントを投稿する</h3>
+    <div style="border: 1px solid #444; border-radius: 10px; padding: 15px; background-color: #2a2a2a;">
+      <%= form_with model: [@post, Comment.new], local: true do |form| %>
+        <div style="margin-bottom: 10px;">
+          <%= form.text_area :body, placeholder: "コメントを入力", rows: 4, style: "width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #555; background-color: #1f1f1f; color: #f5f5f5;" %>
+        </div>
+        <div style="text-align: right;">
+          <%= form.submit "投稿する", style: "padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-weight: bold;" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p style="margin-top: 20px; text-align: center;">コメントを投稿するには <%= link_to "ログイン", login_path, style: "color: #007bff;" %> が必要です</p>
+  <% end %>
+
+</div>
