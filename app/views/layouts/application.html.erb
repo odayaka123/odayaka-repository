@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <!-- ヘッダー -->
+    <header style="background-color: #eee; padding: 10px 20px;">
+      <nav>
+        <%= link_to "トップ", root_path, style: "margin-right: 15px;" %>
+        <%= link_to "投稿一覧", posts_path, style: "margin-right: 15px;" %>
+
+        <% if logged_in? %>
+          <%= link_to "新規投稿", new_post_path, style: "margin-right: 15px;" %>
+          <%= link_to "ログアウト", logout_path, method: :delete, data: { confirm: "ログアウトしますか？" } %>
+        <% else %>
+          <%= link_to "ユーザー登録", signup_path, style: "margin-right: 15px;" %>
+          <%= link_to "ログイン", login_path %>
+        <% end %>
+      </nav>
+    </header>
+
+    <!-- 本文 -->
+    <div class="main" style="padding: 20px;">
+      <% flash.each do |type, msg| %>
+        <p style="color: green;"><%= msg %></p>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>

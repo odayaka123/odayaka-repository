@@ -1,0 +1,65 @@
+<!-- app/views/sessions/new.html.erb -->
+
+<style>
+  body {
+    background-color: #d3d3d3;
+    font-family: sans-serif;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+  }
+
+  .header {
+    background-color: #a0ded9;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .submit-button {
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container">
+  <div class="header">ログインページ</div>
+
+  <%= form_with url: sessions_path, scope: :session, local: true do |form| %>
+    <div class="form-group">
+      <%= form.email_field :email, placeholder: "メールアドレス入力欄" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.password_field :password, placeholder: "パスワード入力欄" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit "ログイン", class: "submit-button" %>
+    </div>
+  <% end %>
+</div>
